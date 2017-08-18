@@ -42,25 +42,26 @@ public class LinkedListMultiset<T> extends Multiset<T>
 		
 		//if not, add new node at the beginning of list
 		else {
-			newNode.setNext(mHead);
-			mHead.setPrev(newNode);
-			mHead = newNode;
-			
-		}
-		
-		mLength++;
-		
-		//check if any existing element has same value
-		Node currNode = mHead;
-		while (currNode != null) {
-            if (currNode.getValue().
-                    equals(newNode.getValue())) {
-                currNode.addCounter();
-                //return;
-            }
-           
-            currNode = currNode.getNext();
-        }
+	        Node currNode = mHead;
+	      ///if already exist
+	        while (currNode != null) {
+	        	
+	            if (currNode.getValue().equals(newNode.getValue())) {
+	                currNode.addCounter();
+	                mLength++;
+	                return;
+	            }
+	            currNode = currNode.getNext();
+	            
+	        }
+	        
+	        newNode.setNext(mHead);
+            mHead.setPrev(newNode);
+            mHead = newNode;
+	        //tempNode.setNext(newNode);
+	    }
+	    mLength++;
+		return;
 		// Implement me!
 	} // end of add()
 	
