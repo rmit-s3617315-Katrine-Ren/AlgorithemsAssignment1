@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Double linked list that extends from Multiset.
  * 
- * @author Katrine
+ * @author Katrine & Samadikun
  */
 
 public class LinkedListMultiset<T> extends Multiset<T>
