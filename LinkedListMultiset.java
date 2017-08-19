@@ -107,39 +107,49 @@ public class LinkedListMultiset<T> extends Multiset<T>
             // check if length of 1
             if (mLength == 1) {
                 mHead = mTail= null;
+                mLength--;
+                return;
             }
             else {
                 mHead = currNode.getNext();
                 mHead.setPrev(null);
                 currNode = null;
+                mLength--;
+                return;
             }
             
-            mLength--;
+            
             
         }
         
         
         // search for value in rest of list
         else {
+        	
             currNode = currNode.getNext();
 
             while (currNode != null) {
-                if (currNode.getValue() == item) {
+            	
+                if (currNode.getValue().equals((String) item)) {
                 	currNode.minusCounter();
-                    Node prevNode = currNode.getPrev();
-                    prevNode.setNext(currNode.getNext());
+                	if(currNode.getCounter()==0){
+                    	Node prevNode = currNode.getPrev();
+                    	prevNode.setNext(currNode.getNext());
                     
-                    // check if tail
-                    if (currNode.getNext() != null) {
-                    	currNode.getNext().setPrev(prevNode);
-                    }
-                    else {
-                    	mTail = prevNode;
+                    	// check if tail
+                    	if (currNode.getNext() != null) {
+                    		currNode.getNext().setPrev(prevNode);
+                    	}
+                    	else {
+                    		mTail = prevNode;
                     	
-                    }
+                    	}
+                    	mLength--;
+                	}
                     currNode = null; //successfully remove, end loop
-                    mLength--;
                     
+                    
+                    return;
                 }
  
                 currNode = currNode.getNext();
