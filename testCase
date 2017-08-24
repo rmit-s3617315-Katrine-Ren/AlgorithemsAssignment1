@@ -1,0 +1,329 @@
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class SortedLinkedListMultiset<T extends Comparable<? super T>> extends Multiset<T>
+{
+	protected Node head;
+	
+	public SortedLinkedListMultiset() {
+		head = null;
+	}
+	
+	public void add(T item) {
+		
+		Node newNode = new Node(item);
+		
+		if(head == null) {
+			
+			head = newNode;
+			return;
+			
+		}else if (newNode.item.compareTo(head.item) == 0){
+			
+			head.number++;
+			return;
+			
+		}else if(newNode.item.compareTo(head.item) < 0) {
+			
+			newNode.next = head;
+			head = newNode;
+			return;
+			
+		}else{
+			
+			Node current = head;
+			
+			// if newNode is smaller than focus.next, keep going until we find the node just greater than focusNode or reach the end
+			while(current.next != null && current.next.item.compareTo(newNode.item) < 0) {
+				
+				current = current.next;
+				
+			}
+			if(current.next != null && current.next.item.compareTo(newNode.item) == 0) {
+				
+				current.next.number++;
+				return;
+			}
+			// scenario 1: reach the end, append the newNode at the end
+			// scenario 2: find the appropriate position, insert it between current and current.next
+			newNode.next = current.next;
+			current.next = newNode;	
+		}
+	} 
+	
+	
+	public int search(T item) {
+		
+		int count = 0;
+		Node current = head;
+		
+		Node newNode = new Node(item);
+
+		while(current != null) {
+			
+			if(newNode.item.compareTo(current.item) == 0) {
+			
+//				System.out.println(item + "  " + current.number);
+				
+				return count = current.number;
+			}
+			current = current.next;
+		}
+//		System.out.println(item + "  " + count);
+		
+		return count;
+	}
+	
+	
+	public void removeOne(T item) {
+		
+		Node newNode = new Node(item);
+		// empty linked list
+		if(head == null) return;
+		
+		// head node is the one we need to removeOne
+		if(head.item.compareTo(newNode.item) == 0) {
+			// more than 1 instances
+			if(head.number != 1) {
+				
+				head.number--; 
+				return;
+			}
+			if(head.number == 1){
+				
+				head = head.next;
+				return;
+			}
+		}
+		
+		Node current = head;
+		
+		// walking through the list
+		while(current.next != null) {
+		
+			if(current.next.item.compareTo(newNode.item) == 0) {
+				
+				if(current.next.number > 1) {
+					
+					current.next.number--;
+					return;
+				}else {
+					  
+					current.next = current.next.next;
+					return;
+				}
+			}
+			current = current.next;
+		}		
+	}
+	
+	
+	public void removeAll(T item) {
+		Node newNode = new Node(item);
+		// empty linked list
+		if(head == null) return;
+		
+		if(head.item.compareTo(newNode.item) == 0) {
+			
+				head = head.next;
+				return;
+		}
+		
+		Node current = head;
+		
+		// walking through the list
+		while(current.next != null) {
+		
+			if(current.next.item.compareTo(newNode.item) == 0) {
+						  
+					current.next = current.next.next;
+					return;
+			}
+			current = current.next;
+		}	
+	} 
+	
+	
+	public void print(PrintStream out) {
+		
+		Node current = head;
+		
+		while(current != null) {
+			
+			out.println(current.item + printDelim  + current.number );
+			
+		    current = current.next;
+		}
+	} 
+	
+	class Node{
+
+		T item;
+		int number = 1;
+		Node next;
+		Node last;
+		
+		public Node(T item) {
+			this.item = item;
+		}
+	}
+
+public static class DataGenerator {
+		
+
+		public static String FNAME() {
+			ArrayList<String> ListFName = new ArrayList<String>();
+
+			ListFName.add("Alice");
+			ListFName.add("Eric");
+			ListFName.add("Rebecca");
+			ListFName.add("Tim");
+			ListFName.add("Berry");
+			ListFName.add("James");
+			ListFName.add("Sophie");
+			ListFName.add("Sam");
+			ListFName.add("Edward");
+			ListFName.add("Simon");
+			ListFName.add("Dora");
+			ListFName.add("Krise");
+			ListFName.add("Yolanda");
+			ListFName.add("Fiona");
+			ListFName.add("Abbey");
+			ListFName.add("Ada");
+			ListFName.add("Adela");
+			ListFName.add("Ali");
+			ListFName.add("Amber");
+			ListFName.add("Green");
+			ListFName.add("Greg");
+			ListFName.add("Jane");
+			ListFName.add("Macy");
+			ListFName.add("Queenie");
+			ListFName.add("Deb");
+			ListFName.add("Jayne");
+			ListFName.add("Mae");
+			ListFName.add("Deane");
+			ListFName.add("Dawn");
+			ListFName.add("Mamie");
+
+			String fristName = ListFName.get(new Random().nextInt(ListFName.size()));
+			return fristName;
+
+		}
+
+		public static String LNAME() {
+			ArrayList<String> ListLName = new ArrayList<String>();
+
+			
+			ListLName.add("Haley");
+			ListLName.add("Hannah");
+			ListLName.add("Bob");
+			ListLName.add("Bea");
+			ListLName.add("Jay");
+			ListLName.add("Heather");
+			ListLName.add("Olive");
+			ListLName.add("Rae");
+			ListLName.add("Babbie");
+			ListLName.add("Thomasina");
+			ListLName.add("Olivia");
+			ListLName.add("Ida");
+			ListLName.add("Wanda");
+			ListLName.add("Rea");
+			ListLName.add("tessa");
+			ListLName.add("Tiffany");
+			ListLName.add("Inge");
+			ListLName.add("Jed");
+			ListLName.add("Renee");
+			ListLName.add("Winnie");
+			ListLName.add("Karla");
+			ListLName.add("Vida");
+			ListLName.add("Vera");
+			ListLName.add("Belle");
+			ListLName.add("Katie");
+			ListLName.add("Tina");
+			ListLName.add("Verena");
+			ListLName.add("Tatum");
+			ListLName.add("Jeff");
+			ListLName.add("Vesta");
+			ListLName.add("Kaley");
+
+			String lastName = ListLName.get(new Random().nextInt(ListLName.size()));
+			
+			return lastName;
+
+		}
+		
+		public static String NAME() {
+			ArrayList<String> Name = new ArrayList<String>();
+            Name.add(FNAME()+ "  " + LNAME());
+			
+
+			String lastName = Name.get(new Random().nextInt(Name.size()));
+			return lastName;
+
+		}
+		
+
+		
+		public static void main(String[] args) {
+			long begin = System.currentTimeMillis();
+			//LinkedListMultiset<String> nameList = new LinkedListMultiset<String>();	
+			LinkedListMultiset<Integer> numberList = new LinkedListMultiset<Integer>();
+			
+			for (int i = 1; i <= 100; i++) {
+				//nameList.add(NAME());
+		       //nameList.print(System.out);	
+				Random r = new Random();
+				int number = r.nextInt(1000);
+			    numberList.add(number);
+				numberList.print(System.out);
+				
+
+			}
+			long end = System.currentTimeMillis();
+			System.out.println(end - begin);
+			
+			while(true){
+			Scanner scan = new Scanner(System.in);
+			System.out.println("what do you want do next");
+			System.out.println("1. add");
+			System.out.println("2. remove");
+			System.out.println("3.remove all");
+			System.out.println("4. search");
+			int choice = scan.nextInt();            
+            switch (choice)
+            {
+            case 1 : 
+                System.out.println("Enter a element to insert");
+                long begin1 = System.currentTimeMillis();
+                numberList.add(scan.nextInt()); 
+            	long end1 = System.currentTimeMillis();
+            	System.out.println(end1 - begin1);
+            	break;
+            case 2 :
+            	System.out.println("Enter a element to remove");
+            	long begin2 = System.currentTimeMillis();
+            	numberList.removeOne(scan.nextInt()); 
+            	long end2 = System.currentTimeMillis();
+            	System.out.println(end2 - begin2);
+            	break;
+            case 3 :
+            	System.out.println("Enter a element to remove");
+            	long begin3 = System.currentTimeMillis();
+            	numberList.removeAll(scan.nextInt()); 
+            	long end3 = System.currentTimeMillis();
+            	System.out.println(end3 - begin3);
+            	break;
+            	
+            case 4 : 
+                System.out.println("Enter a element to search");
+                long begin4 = System.currentTimeMillis();
+                numberList.search(scan.nextInt()); 
+            	long end4 = System.currentTimeMillis();
+            	System.out.println(end4 - begin4);  
+            	break;
+            }    
+			}
+		}
+	}}
