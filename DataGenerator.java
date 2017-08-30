@@ -263,7 +263,33 @@ public class DataGenerator {
              System.out.println("search data (secs): " + timeElapsed4);
              //orderList.print(System.out);
             
-		}
+		
+	      Console cnsl = null;
+             //ArrayList History = new ArrayList<>();
+             try {
+                 //create a buffered reader that connects to the console, we use it so we can read lines
+                 //BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            	     cnsl = System.console();
+
+                 // if console is not null
+                 if (cnsl != null) {
+                 //read a line from the console
+                 String lineFromInput = cnsl.readLine();
+
+                 PrintStream out = new PrintStream(new FileOutputStream("output.txt"));
+                 System.setOut(out);
+                 out.println(lineFromInput);
+
+                 //close the file (VERY IMPORTANT!)
+                 //out.close();
+                 }  }
+                 catch(IOException e1) {
+                   System.out.println("Error during reading/writing");
+              }
+	
+	
+	
+	}
   /**
 		long end = System.nanoTime();
 		double timeElapsed = (end - begin) / Math.pow(10, 9);
