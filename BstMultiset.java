@@ -1,3 +1,4 @@
+package DataStructures;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -101,29 +102,36 @@ public class BstMultiset<T> extends Multiset<T>
 		Node currNode = mRoot;
 		Node prevNode = null;
 		
+		if(mRoot==null)return; ///tree is empty
+		
 		while (currNode != null){
 			
 			if (currNode.getValue().equals(newNode.getValue())) {
+				if(currNode.getCounter()>0){
 		        	currNode.minusCounter();
-		        	break;
-		        }
-			
-			if (currNode.getLeft()==null && currNode.getRight()==null){
+		        	
+		        	if(currNode.getCounter()>0)return;
+		        	
+		        	if(currNode.getCounter()==0)break;
+				}
+			}
+			if (Objects.equals(currNode.getLeft(), currNode.getRight())){
 				return;
 			}
 			
-			else if(currNode.getValue().compareTo(newNode.getValue())<0){
+			else if(currNode.getValue().compareTo(newNode.getValue())<0 && currNode.getRight()!=null){
 				prevNode = currNode;
 				currNode=currNode.getRight();
 			}
 			
-			else if(currNode.getValue().compareTo(newNode.getValue())>0){
+			else if(currNode.getValue().compareTo(newNode.getValue())>0 && currNode.getLeft()!=null){
 				prevNode = currNode;
 				currNode=currNode.getLeft();
 				
 			}
 			
 		}
+		
 		
 		if(currNode.getCounter()==0){
 			
@@ -248,7 +256,7 @@ public class BstMultiset<T> extends Multiset<T>
 			
 			
 		}
-		
+		return; //default return
 	} // end of removeOne()
 	
 	
@@ -267,22 +275,27 @@ public class BstMultiset<T> extends Multiset<T>
 		while (currNode != null){
 			
 			if (currNode.getValue().equals(newNode.getValue())) { /// current Node is the node to be removed
-		        	break;
+				if(currNode.getCounter()>0){
+					currNode.resetCounter();
+					break;
+					}
+				else return; ///If counter=0, it already removed
+		        	
 		        }
 			
-			if (currNode.getLeft()==null && currNode.getRight()==null){ ///no for removal doesn't exist
+			if (Objects.equals(currNode.getLeft(), currNode.getRight())){ ///no for removal doesn't exist
 				return;
 			}
 			
 			//if current node < node to be removed, go right 
 			
-			else if(currNode.getValue().compareTo(newNode.getValue())<0){ 
+			else if(currNode.getValue().compareTo(newNode.getValue())<0 && currNode.getRight()!=null){ 
 				prevNode = currNode;
 				currNode=currNode.getRight();
 			}
 			
 			//if current node > node to be removed, go left 
-			else if(currNode.getValue().compareTo(newNode.getValue())>0){
+			else if(currNode.getValue().compareTo(newNode.getValue())>0 && currNode.getLeft()!=null){
 				prevNode = currNode;
 				currNode=currNode.getLeft();
 				
@@ -291,10 +304,9 @@ public class BstMultiset<T> extends Multiset<T>
 			
 		}
 		
-		currNode.resetCounter();
 		
 		//If node to be deleted has no children
-				if(currNode.getLeft()==null && currNode.getRight()==null){
+				if(Objects.equals(currNode.getLeft(), currNode.getRight())){
 					if(currNode==mRoot){
 						mRoot = null;
 						return;
@@ -407,7 +419,7 @@ public class BstMultiset<T> extends Multiset<T>
 					
 				}
 				
-		
+		return; //default return
 	} // end of removeAll()
 
 
