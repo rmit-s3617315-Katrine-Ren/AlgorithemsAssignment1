@@ -103,7 +103,6 @@ public class BstMultiset<T> extends Multiset<T>
 		Node prevNode = null;
 		
 		if(mRoot==null)return; ///tree is empty
-		
 		while (currNode != null){
 			
 			if (currNode.getValue().equals(newNode.getValue())) {
@@ -115,19 +114,30 @@ public class BstMultiset<T> extends Multiset<T>
 		        	if(currNode.getCounter()==0)break;
 				}
 			}
-			if (Objects.equals(currNode.getLeft(), currNode.getRight())){
-				return;
-			}
 			
+			///If item doesn't match, move to correct children
 			else if(currNode.getValue().compareTo(newNode.getValue())<0 && currNode.getRight()!=null){
 				prevNode = currNode;
 				currNode=currNode.getRight();
 			}
 			
+			
 			else if(currNode.getValue().compareTo(newNode.getValue())>0 && currNode.getLeft()!=null){
 				prevNode = currNode;
 				currNode=currNode.getLeft();
 				
+			}
+			
+			////If item doesn't match and there is no more children
+			else if (Objects.equals(currNode.getLeft(), currNode.getRight())){
+				return;
+			}
+			else if(currNode.getValue().compareTo(newNode.getValue())<0 && currNode.getRight()==null){
+				return;
+			}
+			
+			else if(currNode.getValue().compareTo(newNode.getValue())>0 && currNode.getLeft()==null){
+				return;
 			}
 			
 		}
@@ -270,6 +280,7 @@ public class BstMultiset<T> extends Multiset<T>
 		Node tempNode = null;
 		Node ptempNode = null;
 		
+		if(mRoot==null)return; //Tree is empty
 		
 		//search for node to be removed 
 		while (currNode != null){
@@ -283,10 +294,6 @@ public class BstMultiset<T> extends Multiset<T>
 		        	
 		        }
 			
-			if (Objects.equals(currNode.getLeft(), currNode.getRight())){ ///no for removal doesn't exist
-				return;
-			}
-			
 			//if current node < node to be removed, go right 
 			
 			else if(currNode.getValue().compareTo(newNode.getValue())<0 && currNode.getRight()!=null){ 
@@ -299,6 +306,17 @@ public class BstMultiset<T> extends Multiset<T>
 				prevNode = currNode;
 				currNode=currNode.getLeft();
 				
+			}
+		////If item doesn't match and there is no more children
+			else if (Objects.equals(currNode.getLeft(), currNode.getRight())){
+				return;
+			}
+			else if(currNode.getValue().compareTo(newNode.getValue())<0 && currNode.getRight()==null){
+				return;
+			}
+					
+			else if(currNode.getValue().compareTo(newNode.getValue())>0 && currNode.getLeft()==null){
+				return;
 			}
 			
 			
