@@ -1,3 +1,4 @@
+package DataStructures;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -8,7 +9,7 @@ import java.util.*;
 /**
  * Double linked list that extends from Multiset.
  * 
- * @author Katrine & Samadikun
+ * @author Katrine
  */
 
 public class LinkedListMultiset<T> extends Multiset<T>
@@ -48,12 +49,14 @@ public class LinkedListMultiset<T> extends Multiset<T>
 	        	
 	            if (currNode.getValue().equals(newNode.getValue())) {
 	                currNode.addCounter();
-	                mLength++;
+	                mLength++; 
 	                return;
 	            }
 	            currNode = currNode.getNext();
 	            
 	        }
+	        
+	        
 	        
 	        newNode.setNext(mHead);
             mHead.setPrev(newNode);
@@ -104,6 +107,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
         if (currNode.getValue() == item) {
         	currNode.minusCounter();
         	
+        	if(currNode.getCounter()==0){
             // check if length of 1
             if (mLength == 1) {
                 mHead = mTail= null;
@@ -118,7 +122,7 @@ public class LinkedListMultiset<T> extends Multiset<T>
                 return;
             }
             
-            
+        }
             
         }
         
